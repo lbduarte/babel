@@ -1,8 +1,16 @@
+using System.Diagnostics;
+using Babel.Server.Diagnostics;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.AddMiddlewareAnalysis();
 
 var app = builder.Build();
+
+var diagnosticListener = app.Services.GetRequiredService<DiagnosticListener>();
+var listener = new MiddlewareDiagnosticListener();
+diagnosticListener.SubscribeWithAdapter(listener);
 
 if (app.Environment.IsDevelopment())
 {
