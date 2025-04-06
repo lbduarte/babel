@@ -1,17 +1,13 @@
-using System.Diagnostics;
-using Babel.Server.Diagnostics;
-using Microsoft.AspNetCore.MiddlewareAnalysis;
+using Babel.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMiddlewareAnalysisDiagnostics();
 builder.Services.AddOpenApi();
-builder.Services.Insert(0, ServiceDescriptor.Transient<IStartupFilter, AnalysisStartupFilter>());
 
 var app = builder.Build();
 
-var listener = app.Services.GetRequiredService<DiagnosticListener>();
-var adapter = ActivatorUtilities.CreateInstance<MiddlewareAnalysisDiagnosticAdapter>(app.Services);
-listener.SubscribeWithAdapter(adapter);
+app.ConsumeMiddlewareAnalysisDiagnostics();
 
 if (app.Environment.IsDevelopment())
 {
