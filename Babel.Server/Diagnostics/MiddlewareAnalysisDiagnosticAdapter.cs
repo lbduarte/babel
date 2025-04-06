@@ -5,6 +5,7 @@ namespace Babel.Server.Diagnostics;
 public class MiddlewareAnalysisDiagnosticAdapter
 {
     private readonly ILogger<MiddlewareAnalysisDiagnosticAdapter> _logger;
+
     public MiddlewareAnalysisDiagnosticAdapter(ILogger<MiddlewareAnalysisDiagnosticAdapter> logger)
     {
         _logger = logger;
